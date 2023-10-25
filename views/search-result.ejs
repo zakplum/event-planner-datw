@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <title>Search Results for <%=plannerName%></title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+    <h1>Search Results for <%=plannerName%></h1>
+    <h2>Search Term: <%=keyword%></h2>
+    <ul>
+      <% results.forEach(function(result) { %>
+        <li>
+          <strong>Event Name:</strong> <%= result.Name %><br>
+          <strong>Date:</strong> <%= result.Date %><br>
+          <strong>Time:</strong> <%= result.Time %><br>
+          <strong>Location:</strong> <%= result.Location %><br>
+          <strong>Description:</strong> <%= result.Description %>
+        </li>
+        <br>
+      <% }); %>
+    </ul>
+</body>
+</html>

@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt')
+const saltRounds = 10
+
 module.exports = function(app, plannerData) {
     
     app.get('/',function(req,res){
@@ -12,8 +15,52 @@ module.exports = function(app, plannerData) {
         res.render("search.ejs", plannerData);
     });
 
+    app.get('/search-result', function(req,res) {
+        const keyword = req.query.keyword
+        const query = 'SELECT * FROM events WHERE Name LIKE ? OR Description LIKE ?'
+
+        db.query(query, [`%${keyword}%`, `%${keyword}%`], (err, results) => {
+            if (err) {
+              console.error("Database query error:", err);
+              res.status(500).send("Internal Server Error");
+            } else {
+              res.render("search-result.ejs", { plannerName: plannerData.plannerName, keyword, results });
+            }
+          });
+        });
+
     app.get('/login',function(req,res){
         res.render("login.ejs", plannerData);
+    });
+
+    app.post('/loggedin', function (req, res) {
+        const { username, password } = req.body
+        const sql = 'SELECT * FROM users WHERE username = ?'
+
+        db.query(sql, [username], function (error, results) {
+            if (error) {
+                console.error(error);
+                return res.status(500).send("Error during login.")
+            }
+
+            if (results.length === 0) {
+                return res.status(401).send("Invalid username or password.")
+            }
+
+            const user = results[0];
+
+            bcrypt.compare(password, user.hashedPassword, function(err, isPasswordValid) {
+
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send("Error during login.");
+                } else if (isPasswordValid) {
+                    res.send('Login successful')
+                } else {
+                    res.status(401).send("Invalid username or password.")
+                }
+            });
+        });
     });
 
     app.get('/register', function (req,res) {
@@ -21,6 +68,29 @@ module.exports = function(app, plannerData) {
     });   
 
     app.post('/registered', function (req,res) {
-        res.send(' Hello '+ req.body.first + ' '+ req.body.last +' you are now registered!  We will send an email to you at ' + req.body.email);                          
-    }); 
+
+         const plainPassword = req.body.password
+
+         bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword){
+
+            if(err){
+                console.log(err)
+                return res.status(500).send('Error registering user.')
+            }
+
+            const sql = 'INSERT INTO users (username, email, hashedPassword) VALUES (?, ?, ?)'
+            const values = [req.body.username, req.body.email, hashedPassword]
+
+            db.query(sql, values, function (err, results, fields) {
+
+                if(err) {
+                    console.log(err)
+                    return res.status(500).send('Error registering user.')
+                }
+
+                const result = 'Hello ' + req.body.username + ' you are now registered!'
+                res.send(result)
+            })
+         })           
+    })
 }
