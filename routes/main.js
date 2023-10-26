@@ -88,9 +88,46 @@ module.exports = function(app, plannerData) {
                     return res.status(500).send('Error registering user.')
                 }
 
-                const result = 'Hello ' + req.body.username + ' you are now registered!'
+                const result = 'Hello ' + req.body.username + ' you are now registered! Your password is ' +req.body.password + " and your hashed password is " + hashedPassword
+                
                 res.send(result)
             })
          })           
     })
+
+    app.get('/create-event', function(req,res) {
+        res.render('create-event.ejs', plannerData)
+    })
+
+    app.post('/create-event', function(req,res) {
+        const { eventName, eventDate, eventTime, eventLocation, eventDescription, organiserEmail}  = req.body
+        const getOrganiserId = 'SELECT user_id FROM Users WHERE email = ?'
+        
+        db.query(getOrganiserId, [organiserEmail], function(err, results){
+            if(err){
+                console.log(err)
+                return res.status(500).send("Error creating the event.")
+            }
+
+            if(results.length === 0){
+                return res.status(400).send('Organiser not found')
+            }
+
+            const organiserId = results[0].user_id
+            const createEventQuery = 'INSERT INTO Events (OrganiserID, Name, Date, Time, Location, Description) VALUES (?, ?, ?, ?, ?, ?)'
+
+            db.query(createEventQuery, [organiserId, eventName, eventDate, eventTime, eventLocation, eventDescription], function(err, results){
+                if(err){
+                    console.log(err)
+                    return res.status(500).send("Error creating the event")
+                }
+
+                return res.send('Event created successfully!')
+            })
+        })
+        
+         
+
+    })
+
 }
