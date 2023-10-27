@@ -1,5 +1,6 @@
 body {
-    margin: 5;
+    margin: 0;
+    padding: 0;
     background-color: hsl(0, 0%, 100%);
     color: hsl(0, 0%, 10%);
     line-height: 1.0;
@@ -10,25 +11,75 @@ body {
     text-align: center;
   }
 
+  .container {
+    position: absolute;
+    width: 100%;
+  }
+  
   .nav-bar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .nav-bar li {
-    float: left;
-  }
-
-  .nav-bar li a{
-    display: block;
-    color: rgb(0, 0, 0);
     text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+  }
+  
+  .nav-bar li{
+    display: inline-block;
+    padding: 0 5px;
+
   }
 
-  .nav-bar li a:hover {
-    color: #42bd00;
+  .nav-bar a{
+    text-decoration: none;
+    color: black;
+  }
+
+  .nav-bar a:hover{
+    text-decoration:underline;
+    color: #0465ce;
+  }
+
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 3px;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  button[type="submit"] {
+    background-color: #0465ce;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0465ce;
   }

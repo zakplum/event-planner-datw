@@ -17,9 +17,9 @@ module.exports = function(app, plannerData) {
 
     app.get('/search-result', function(req,res) {
         const keyword = req.query.keyword
-        const query = 'SELECT * FROM events WHERE Name LIKE ? OR Description LIKE ?'
+        const query = 'SELECT * FROM events WHERE Name LIKE ? OR Description LIKE ? OR Location LIKE ?'
 
-        db.query(query, [`%${keyword}%`, `%${keyword}%`], (err, results) => {
+        db.query(query, [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`], (err, results) => {
             if (err) {
               console.error("Database query error:", err);
               res.status(500).send("Internal Server Error");
@@ -88,7 +88,7 @@ module.exports = function(app, plannerData) {
                     return res.status(500).send('Error registering user.')
                 }
 
-                const result = 'Hello ' + req.body.username + ' you are now registered! Your password is ' +req.body.password + " and your hashed password is " + hashedPassword
+                const result = 'Hello ' + req.body.username + ' you are now registered! Your password is ' + req.body.password + " and your hashed password is " + hashedPassword
                 
                 res.send(result)
             })
@@ -125,9 +125,5 @@ module.exports = function(app, plannerData) {
                 return res.send('Event created successfully!')
             })
         })
-        
-         
-
     })
-
 }
