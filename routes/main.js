@@ -71,6 +71,10 @@ module.exports = function(app, plannerData) {
 
          const plainPassword = req.body.password
 
+         if (plainPassword.length < 8 || !/[!@#$%^&*]/.test(plainPassword)) {
+            return res.status(400).send('Password must be at least 8 characters long and contain at least one special character (!@#$%^&*).');
+        }
+
          bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword){
 
             if(err){

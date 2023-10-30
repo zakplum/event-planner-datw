@@ -7,9 +7,13 @@
   <body>
     <h1 class="main-title">Login</h1>
     <form method="POST" action="/loggedin">
-      <p>Username: <input id="username" type="text" name="username" placeholder="username" /></p>
-      <p>Password: <input id="password" type="password" name="password" placeholder="password" /></p>
-      <button type="submit">Login</button>
+      <label for="username">Username:</label>
+    <input id="username" type="text" name="username" placeholder="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input id="password" type="password" name="password" placeholder="password" required>
+    <br>
+    <button type="submit">Login</button>
     </form>
   </body>
 </html>

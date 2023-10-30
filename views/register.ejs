@@ -3,13 +3,26 @@
   <head>
     <title>Register for <%=plannerName%></title>
     <link rel="stylesheet"  type="text/css" href="style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/password_strength.js"></script>
   </head>
   <body>
     <h1 class="main-title">Register for <%=plannerName%></h1>
     <form method="POST" action="/registered">
-        <p>Email: <input id="email" type="email" name="email" placeholder="email" /></p>
-        <p>Username: <input id="username" type="text" name="username" placeholder="username" /></p>
-        <p>Password: <input id="password" type="password" name="password" placeholder="password" /></p>
+      <label for="email">Email:</label>
+      <input id="email" type="email" name="email" placeholder="email" required>
+      <br>
+      <label for="username">Username:</label>
+      <input id="username" type="text" name="username" placeholder="username" required>
+      <br>
+      <label for="password">Password:</label>
+      <input id="password" type="password" name="password" placeholder="password" required>
+        <div class="password-strength">
+          <progress value="0" max="100" id="password-strength-bar"></progress>
+          <h5>
+              Please include 8 or more characters and a special character: (!@#$%^&*)
+          </h5>
+      </div>
         <button type="submit">Register</button>
       </form>
   </body>
