@@ -114,3 +114,12 @@ progress[value="50"]::-webkit-progress-value {
 progress[value="100"]::-webkit-progress-value {
   background: #2ece73;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #f9f9f9;
+  padding: 10px;
+  text-align: right;
+}

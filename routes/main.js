@@ -2,20 +2,32 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 module.exports = function(app, plannerData) {
+
+
+    const redirectLogin = (req, res, next) => {
+        if (!req.session.userId ){
+            res.redirect('./login')
+        } 
+        else{ 
+            next (); 
+        }
+    } 
+       
     
-    app.get('/',function(req,res){
-        res.render('index.ejs', plannerData)
+    app.get('/', function (req, res) {
+        res.render('index.ejs', plannerData);
     });
+    
 
     app.get('/about',function(req,res){
         res.render('about.ejs', plannerData);
     });
 
-    app.get('/search',function(req,res){
+    app.get('/search',redirectLogin, function(req,res){
         res.render("search.ejs", plannerData);
     });
 
-    app.get('/search-result', function(req,res) {
+    app.get('/search-result', redirectLogin, function(req,res) {
         const keyword = req.query.keyword
         const query = 'SELECT * FROM events WHERE Name LIKE ? OR Description LIKE ? OR Location LIKE ?'
 
@@ -55,13 +67,23 @@ module.exports = function(app, plannerData) {
                     console.error(err);
                     return res.status(500).send("Error during login.");
                 } else if (isPasswordValid) {
-                    res.send('Login successful')
+                    req.session.userId = req.body.username;
+                    res.send('Login successful. Go back to <a href='+'./'+'>Home</a>')
                 } else {
                     res.status(401).send("Invalid username or password.")
                 }
             });
         });
     });
+
+    app.get('/logout', redirectLogin, (req,res) => {
+        req.session.destroy(err => {
+            if (err) {
+                return res.redirect('./')
+            }
+        res.send('You are now logged out. Go back to <a href='+'./'+'>Home</a>');
+        })
+    })
 
     app.get('/register', function (req,res) {
         res.render('register.ejs', plannerData);                       
@@ -99,11 +121,11 @@ module.exports = function(app, plannerData) {
          })           
     })
 
-    app.get('/create-event', function(req,res) {
+    app.get('/create-event', redirectLogin, function(req,res) {
         res.render('create-event.ejs', plannerData)
     })
 
-    app.post('/create-event', function(req,res) {
+    app.post('/create-event', redirectLogin, function(req,res) {
         const { eventName, eventDate, eventTime, eventLocation, eventDescription, organiserEmail}  = req.body
         const getOrganiserId = 'SELECT user_id FROM Users WHERE email = ?'
         
