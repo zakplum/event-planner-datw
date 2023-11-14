@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>My Events</title>
+    <link rel="stylesheet"  type="text/css" href="style.css" />
+</head>
+<body>
+    <h1 class="main-title">My Events</h1>
+    <% if (events.length > 0) { %>
+        <ul class="my-events-list">
+            <% events.forEach(event => { %>
+                <li class="my-event-item">
+                    <p class="event-name"><%= event.Name %></p>
+                    <p>Date: <%= event.Date %></p>
+                    <p>Time: <%= event.Time %></p>
+                    <p>Location: <%= event.Location %></p>
+                    <p>Description: <%= event.Description %></p>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>You have no events yet.</p>
+    <% } %>
+    <div class="footer">
+        <a href="/">Home</a>
+      </div>
+</body>
+</html>

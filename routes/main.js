@@ -67,7 +67,7 @@ module.exports = function(app, plannerData) {
                     console.error(err);
                     return res.status(500).send("Error during login.");
                 } else if (isPasswordValid) {
-                    req.session.userId = req.body.username;
+                    req.session.userId = user.user_id;
                     res.send('Login successful. Go back to <a href='+'./'+'>Home</a>')
                 } else {
                     res.status(401).send("Invalid username or password.")
@@ -152,4 +152,20 @@ module.exports = function(app, plannerData) {
             })
         })
     })
+
+    app.get('/my-events', redirectLogin, function(req, res) {
+
+        const userId = req.session.userId;
+        const query = 'SELECT * FROM events WHERE OrganiserID = ?';
+    
+        db.query(query, [userId], (err, results) => {
+            if (err) {
+                console.error("Database query error:", err);
+                res.status(500).send("Internal Server Error");
+            } else {
+                res.render("my-events.ejs", { plannerName: plannerData.plannerName, events: results });
+            }
+        });
+    });
+    
 }

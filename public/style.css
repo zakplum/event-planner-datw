@@ -1,19 +1,22 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #061808;
-  color: #d4291c;
+  background-color: #fcf7e2;
+  color: #eb6f23;
   line-height: 1.0;
   font-family: "PT Sans", Calibri, Tahoma, sans-serif;
 }
 
-h5 {
-  color: #f4b142;
+* {
+  margin: 0;
 }
 
-.main-title {
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: #38275d;
   text-align: center;
-  color: #f4b142;
 }
 
 .container {
@@ -32,12 +35,12 @@ h5 {
 
 .nav-bar a {
   text-decoration: none;
-  color: #f4b142;
+  color: #2a2927;
 }
 
 .nav-bar a:hover {
   text-decoration: underline;
-  color: #d4291c;
+  color: #eb6f23;
 }
 
 form {
@@ -45,8 +48,8 @@ form {
   margin: 0 auto;
   padding: 20px;
   padding-right: 40px;
-  background-color: #173e28; /* Dark green background */
-  border: 1px solid #d4291c; /* Red border */
+  background-color: #fcf7e2; 
+  border: 1px solid #eb6f23; 
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -55,7 +58,7 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #f4b142; /* Yellow label text */
+  color: #38275d; 
 }
 
 input[type="text"],
@@ -67,11 +70,11 @@ textarea {
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
-  border: 1px solid #d4291c; /* Red border */
+  border: 1px solid #eb6f23; /* Red border */
   border-radius: 3px;
   margin-right: 3px;
-  background-color: #173e28; /* Dark green background */
-  color: #f4b142; /* Yellow text */
+  background-color: #fcf7e2; /* Dark green background */
+  color: #38275d; /* Yellow text */
 }
 
 textarea {
@@ -79,8 +82,8 @@ textarea {
 }
 
 button[type="submit"] {
-  background-color: #f4b142;
-  color: #d4291c;
+  background-color: #38275d;
+  color: #eb6f23;
   border: none;
   padding: 10px 20px;
   border-radius: 3px;
@@ -89,8 +92,8 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #d4291c;
-  color: #f4b142;
+  background-color: #eb6f23;
+  color: #38275d;
 }
 
 .about-text {
@@ -101,7 +104,7 @@ button[type="submit"]:hover {
 
 progress {
   appearance: none;
-  border: 1px solid #f4b142;
+  border: 1px solid #38275d;
   height: 10px;
   width: 100%;
 }
@@ -118,8 +121,32 @@ progress[value="100"]::-webkit-progress-value {
 .footer {
   position: fixed;
   bottom: 0;
-  right: 0;
-  background-color: #f9f9f9;
+  left: 0; 
+  width: 100%; 
+  background-color: #eb6f23;
+  color: #38275d;
   padding: 10px;
-  text-align: right;
+  text-align: center;
+  font-weight: bold;
+}
+
+
+.my-events-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.my-event-item {
+  border: 1px solid #eb6f23;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #fcf7e2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.event-name{
+  color: #38275d;
+  font-weight: bold;
 }
