@@ -12,10 +12,15 @@ module.exports = function(app, plannerData) {
             next (); 
         }
     } 
+
        
     
     app.get('/', function (req, res) {
-        res.render('index.ejs', plannerData);
+        const data = {
+            ...plannerData,
+            username: req.session.userId || null
+        };
+        res.render('index.ejs', data);
     });
     
 
