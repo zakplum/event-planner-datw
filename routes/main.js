@@ -4,6 +4,20 @@ const saltRounds = 10
 module.exports = function(app, plannerData) {
 
 
+    app.get('/api', function (req,res) {
+
+        let sqlquery = "SELECT * FROM events"; 
+
+        db.query(sqlquery, (err, result) => {
+            if (err) {
+                res.redirect('./');
+            }
+            res.json(result); 
+        });
+    });
+
+
+
     const redirectLogin = (req, res, next) => {
         if (!req.session.userId ){
             res.redirect('./login')
