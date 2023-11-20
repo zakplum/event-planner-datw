@@ -18,7 +18,8 @@ Modules needed:
 mysql -u [mysql-username] -p eventplanner < database/setup.sql
 ```
 
-_This will create the database and tables. Register a new user and create an event to insert into their respective tables_
+_This will create the database and tables. 
+Register a new user and create an event through their webpages to insert into their respective tables_ 
 
 ---
 
