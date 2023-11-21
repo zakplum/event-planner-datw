@@ -48,7 +48,11 @@ module.exports = function(app, plannerData) {
 
     app.get('/search-result', redirectLogin, function(req,res) {
         const keyword = req.query.keyword
-        const query = 'SELECT * FROM events WHERE Name LIKE ? OR Description LIKE ? OR Location LIKE ?'
+        const query = ` SELECT *,
+        DATE_FORMAT(Date, '%a %b %e %Y') AS formatted_date
+        FROM events 
+        WHERE Name LIKE ? OR Description LIKE ? OR Location LIKE ?
+    `;
 
         db.query(query, [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`], (err, results) => {
             if (err) {
@@ -123,7 +127,7 @@ module.exports = function(app, plannerData) {
                 return res.status(500).send('Error registering user.')
             }
 
-            const sql = 'INSERT INTO users (username, email, hashedPassword) VALUES (?, ?, ?)'
+            const sql = 'CALL AddUser(?, ?, ?)';
             const values = [req.body.username, req.body.email, hashedPassword]
 
             db.query(sql, values, function (err, results, fields) {
@@ -146,7 +150,7 @@ module.exports = function(app, plannerData) {
 
     app.post('/create-event', redirectLogin, function(req,res) {
         const { eventName, eventDate, eventTime, eventLocation, eventDescription, organiserEmail}  = req.body
-        const getOrganiserId = 'SELECT user_id FROM Users WHERE email = ?'
+        const getOrganiserId = 'SELECT user_id FROM users WHERE email = ?'
         
         db.query(getOrganiserId, [organiserEmail], function(err, results){
             if(err){
@@ -159,7 +163,7 @@ module.exports = function(app, plannerData) {
             }
 
             const organiserId = results[0].user_id
-            const createEventQuery = 'INSERT INTO Events (OrganiserID, Name, Date, Time, Location, Description) VALUES (?, ?, ?, ?, ?, ?)'
+            const createEventQuery = 'INSERT INTO events (OrganiserID, Name, Date, Time, Location, Description) VALUES (?, ?, ?, ?, ?, ?)'
 
             db.query(createEventQuery, [organiserId, eventName, eventDate, eventTime, eventLocation, eventDescription], function(err, results){
                 if(err){
@@ -175,7 +179,9 @@ module.exports = function(app, plannerData) {
     app.get('/my-events', redirectLogin, function(req, res) {
 
         const userId = req.session.userId;
-        const query = 'SELECT * FROM events WHERE OrganiserID = ?';
+        const query = ` SELECT *,
+        DATE_FORMAT(Date, '%a %b %e %Y') AS formatted_date
+        FROM events WHERE OrganiserID = ?`;
     
         db.query(query, [userId], (err, results) => {
             if (err) {

@@ -10,7 +10,7 @@
             <% events.forEach(event => { %>
                 <li class="my-event-item">
                     <p class="event-name"><%= event.Name %></p>
-                    <p>Date: <%= event.Date %></p>
+                    <p>Date: <%= event.formatted_date %></p>
                     <p>Time: <%= event.Time %></p>
                     <p>Location: <%= event.Location %></p>
                     <p>Description: <%= event.Description %></p>
