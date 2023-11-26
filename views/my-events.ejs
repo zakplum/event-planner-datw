@@ -14,6 +14,10 @@
                     <p>Time: <%= event.Time %></p>
                     <p>Location: <%= event.Location %></p>
                     <p>Description: <%= event.Description %></p>
+                    <form action="/delete-event" method="POST">
+                        <input type="hidden" name="eventId" value="<%= event.EventID %>">
+                        <button type="submit">Delete Event</button>
+                    </form>
                 </li>
             <% }); %>
         </ul>

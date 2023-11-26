@@ -16,8 +16,6 @@ module.exports = function(app, plannerData) {
         });
     });
 
-
-
     const redirectLogin = (req, res, next) => {
         if (!req.session.userId ){
             res.redirect('./login')
@@ -27,8 +25,6 @@ module.exports = function(app, plannerData) {
         }
     } 
 
-       
-    
     app.get('/', function (req, res) {
         const data = {
             ...plannerData,
@@ -189,6 +185,23 @@ module.exports = function(app, plannerData) {
                 res.status(500).send("Internal Server Error");
             } else {
                 res.render("my-events.ejs", { plannerName: plannerData.plannerName, events: results });
+            }
+        });
+    });
+
+    app.post('/delete-event', redirectLogin, function(req, res) {
+
+        const eventId = req.body.eventId;
+        const userId = req.session.userId;
+    
+        const deleteQuery = `DELETE FROM events WHERE EventID = ? AND OrganiserID = ?`;
+    
+        db.query(deleteQuery, [eventId, userId], (err, result) => {
+            if (err) {
+                console.error("Database query error:", err);
+                res.status(500).send("Internal Server Error: " + err.message);
+            } else {
+                res.redirect('/my-events');
             }
         });
     });
