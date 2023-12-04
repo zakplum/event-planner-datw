@@ -110,6 +110,18 @@ module.exports = function(app, plannerData) {
 
     app.post('/registered', function (req,res) {
 
+        const { username, email } = req.body;
+
+        if (!username || username.length < 3) {
+            return res.status(400).send('Username must be at least 3 characters long.');
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email || !emailRegex.test(email)) {
+            return res.status(400).send('Invalid email format.');
+        }
+
          const plainPassword = req.body.password
 
          if (plainPassword.length < 8 || !/[!@#$%^&*]/.test(plainPassword)) {
