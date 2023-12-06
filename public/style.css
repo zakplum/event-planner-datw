@@ -170,3 +170,40 @@ progress[value="100"]::-webkit-progress-value {
   color: #38275d;
   font-weight: bold;
 }
+
+#weatherForm {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 0;
+  background-color: transparent; 
+  border: none; 
+  box-shadow: none; 
+  text-align: center;
+}
+
+#weatherForm input[type="text"] {
+  border: 1px solid #eb6f23; 
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: #fcf7e2;
+}
+
+#weatherForm button[type="submit"] {
+  background-color: #38275d;
+  color: #eb6f23;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#weatherResult {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #fcf7e2; 
+  color: #38275d;
+  text-align: center;
+  border-radius: 5px;
+}

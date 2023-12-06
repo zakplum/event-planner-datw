@@ -217,5 +217,24 @@ module.exports = function(app, plannerData) {
             }
         });
     });
+
+    app.get('/weather',function(req,res){
+        const request = require('request');
+          
+        let apiKey = 'faf1b9ae7f8c25b81900ed60258ffde6';
+        let city = req.query.city || 'london';
+        let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+                     
+        request(url, function (err, response, body) {
+          if(err){
+            console.log('error:', error);
+          } else {
+            var weather = JSON.parse(body)
+            var wmsg = 'It is '+ weather.main.temp + ' degrees in '+ weather.name + '! <br> The humidity now is: ' + weather.main.humidity;
+            res.send (wmsg);
+          } 
+
+        });
+    });
     
 }
