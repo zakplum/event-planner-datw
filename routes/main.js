@@ -187,19 +187,34 @@ module.exports = function(app, plannerData) {
     app.get('/my-events', redirectLogin, function(req, res) {
 
         const userId = req.session.userId;
-        const query = ` SELECT *,
+
+        const countQuery = `SELECT COUNT(*) AS eventCount FROM events WHERE OrganiserID = ?`;
+
+        const eventQuery = ` SELECT *,
         DATE_FORMAT(Date, '%a %b %e %Y') AS formatted_date
-        FROM events WHERE OrganiserID = ?`;
+        FROM events WHERE OrganiserID = ?
+        ORDER BY Date`;
     
-        db.query(query, [userId], (err, results) => {
+        db.query(countQuery, [userId], (err, countResult) => {
+            if (err) {
+                console.error("Database query error:", err);
+                res.status(500).send("Internal Server Error");
+                return;
+            }
+    
+            const eventCount = countResult[0].eventCount;
+
+        db.query(eventQuery, [userId], (err, events) => {
             if (err) {
                 console.error("Database query error:", err);
                 res.status(500).send("Internal Server Error");
             } else {
-                res.render("my-events.ejs", { plannerName: plannerData.plannerName, events: results });
+                res.render("my-events.ejs", { plannerName: plannerData.plannerName, events, eventCount });
             }
         });
     });
+
+});
 
     app.post('/delete-event', redirectLogin, function(req, res) {
 

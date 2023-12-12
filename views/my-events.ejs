@@ -5,6 +5,7 @@
 </head>
 <body>
     <h1 class="main-title">My Events</h1>
+    <h2>You have <%= eventCount %> events.</h2>
     <% if (events.length > 0) { %>
         <ul class="my-events-list">
             <% events.forEach(event => { %>
