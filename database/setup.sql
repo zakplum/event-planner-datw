@@ -2,12 +2,16 @@ CREATE DATABASE IF NOT EXISTS eventplanner;
 
 USE eventplanner;
 
+-- Users Table
+
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100),
     username VARCHAR(50),
     hashedPassword VARCHAR(255)
 );
+
+-- Events Table
 
 CREATE TABLE IF NOT EXISTS events (
     EventID INT AUTO_INCREMENT PRIMARY KEY,

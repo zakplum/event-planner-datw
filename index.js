@@ -5,9 +5,12 @@ var bodyParser = require('body-parser')
 var mysql = require('mysql')
 var session = require ('express-session');
 
+
+// Create express application
 const app = express();
 const port = 8000;
 
+// Parse request body
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //Create a session
@@ -52,6 +55,5 @@ db.connect((err) => {
 
     console.log('Connected to the database')
 })
-
 global.db = db;
 
